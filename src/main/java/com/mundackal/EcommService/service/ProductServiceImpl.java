@@ -1,14 +1,34 @@
 package com.mundackal.EcommService.service;
 
-import com.mundackal.EcommService.dto.ProductResponseDTO;
+import com.mundackal.EcommService.dto.FakeProductsResponseDTO;
+import com.mundackal.EcommService.model.Product;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
-@Service
+@Service("ProductService")
 public class ProductServiceImpl implements ProductService{
 
-    public ProductResponseDTO getProducts(){
-        RestTemplate rt = new RestTemplate();
-        return rt.getForEntity("https://fakestoreapi.com/products/1", ProductResponseDTO.class).getBody();
+    @Override
+    public FakeProductsResponseDTO getAllProducts() {
+        return null;
+    }
+
+    @Override
+    public Product getProductById(int id) {
+        return null;
+    }
+
+    @Override
+    public Product createProduct(Product product) {
+        return null;
+    }
+
+    @Override
+    public Product updateProduct(int id, Product updatedProduct) {
+        return null;
+    }
+
+    @Override
+    public Product deleteProduct(int id) {
+        return null;
     }
 }
