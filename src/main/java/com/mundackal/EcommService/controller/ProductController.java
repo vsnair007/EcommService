@@ -10,10 +10,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+
 public class ProductController {
 
     @Autowired
-    @Qualifier("fakeService")
+    public ProductController( @Qualifier("fakeService") ProductService productService) {
+        this.productService = productService;
+    }
+
+
     ProductService productService;
 
     @GetMapping("/products")

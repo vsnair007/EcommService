@@ -2,6 +2,7 @@ package com.mundackal.EcommService.service;
 
 import com.mundackal.EcommService.dto.FakeProductsResponseDTO;
 import com.mundackal.EcommService.model.Product;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -11,6 +12,7 @@ public class FakeProductServiceImpl implements ProductService{
 
     private RestTemplateBuilder restTemplateBuilder;
 
+    @Autowired
     public FakeProductServiceImpl(RestTemplateBuilder restTemplateBuilder) {
         this.restTemplateBuilder = restTemplateBuilder;
     }
