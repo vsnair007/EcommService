@@ -1,11 +1,8 @@
 package com.mundackal.EcommService.service;
 
 import com.mundackal.EcommService.dto.FakeProductsResponseDTO;
-import com.mundackal.EcommService.dto.ProductResponseDTO;
+import com.mundackal.EcommService.dto.ProductRequestDTO;
 import com.mundackal.EcommService.model.Product;
-import org.springframework.http.ResponseEntity;
-
-import java.util.List;
 
 public interface ProductService {
     //getAll
@@ -13,9 +10,10 @@ public interface ProductService {
     //getById
     Product getProductById(int id);
     //create/post new product
-    Product createProduct(Product product);
+    Product createProduct(ProductRequestDTO productRequestDTO);
     //Update
-    Product updateProduct(int id, Product updatedProduct);
+    Product updateProduct(int id, ProductRequestDTO updatedProductRequestDTO);
+
     //Delete
     Product deleteProduct(int id);
 }

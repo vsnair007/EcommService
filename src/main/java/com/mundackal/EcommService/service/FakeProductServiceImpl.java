@@ -1,6 +1,7 @@
 package com.mundackal.EcommService.service;
 
 import com.mundackal.EcommService.dto.FakeProductsResponseDTO;
+import com.mundackal.EcommService.dto.ProductRequestDTO;
 import com.mundackal.EcommService.model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -20,7 +21,12 @@ public class FakeProductServiceImpl implements ProductService{
     @Override
     public FakeProductsResponseDTO getAllProducts() {
         RestTemplate rt = restTemplateBuilder.build();
-        return rt.getForEntity("https://fakestoreapi.com/products", FakeProductsResponseDTO.class).getBody();
+        Product[] recievedArray = rt.getForEntity("https://fakestoreapi.com/products", Product[].class).getBody();
+        FakeProductsResponseDTO resultingArray = new FakeProductsResponseDTO();
+        for(Product p : recievedArray ){
+            resultingArray.getProducts().add(p);
+        }
+        return resultingArray;
     }
 
     @Override
@@ -30,17 +36,23 @@ public class FakeProductServiceImpl implements ProductService{
     }
 
     @Override
-    public Product createProduct(Product product) {
-        return null;
+    public Product createProduct(ProductRequestDTO product) {
+        String url = "https://fakestoreapi.com/products";
+        RestTemplate rt = restTemplateBuilder.build();
+        return rt.postForEntity(url,product,Product.class).getBody();
     }
 
     @Override
-    public Product updateProduct(int id, Product updatedProduct) {
+    public Product updateProduct(int id, ProductRequestDTO updatedProductRequestDTO) {
         return null;
     }
 
     @Override
     public Product deleteProduct(int id) {
-        return null;
+        String url = "https://fakestoreapi.com/products/"+id;
+        Product deletedProduct = getProductById(id);
+        RestTemplate rt = restTemplateBuilder.build();
+        rt.delete(url);
+        return deletedProduct;
     }
 }
