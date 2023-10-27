@@ -6,13 +6,13 @@ import com.mundackal.EcommService.dto.FakeStoreAPIResponseDTO;
 import com.mundackal.EcommService.dto.ProductRequestDTO;
 import com.mundackal.EcommService.dto.ProductResponseDTO;
 import com.mundackal.EcommService.exception.ProductNotFound;
-import com.mundackal.EcommService.model.Product;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
-import static com.mundackal.EcommService.mapper.ProductMapper.FakeStoreAPIResponseDTOSToFakeProductsResponseDTO;
+//Allows to use static methods without using classname directly. Promotes readability
 import static com.mundackal.EcommService.mapper.ProductMapper.FakeStoreAPIResponseDTOToProductResponseMapper;
+import static com.mundackal.EcommService.mapper.ProductMapper.FakeStoreAPIResponseDTOSToFakeProductsResponseDTO;
 import static com.mundackal.EcommService.utils.ProductUtils.isNull;
+
 
 @Service("fakeService")
 public class FakeProductServiceImpl implements ProductService{
