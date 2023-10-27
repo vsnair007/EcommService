@@ -2,18 +2,20 @@ package com.mundackal.EcommService.service;
 
 import com.mundackal.EcommService.dto.FakeProductsResponseDTO;
 import com.mundackal.EcommService.dto.ProductRequestDTO;
+import com.mundackal.EcommService.dto.ProductResponseDTO;
+import com.mundackal.EcommService.exception.ProductNotFound;
 import com.mundackal.EcommService.model.Product;
 
 public interface ProductService {
     //getAll
-    FakeProductsResponseDTO getAllProducts();
+    FakeProductsResponseDTO getAllProducts() throws ProductNotFound;
     //getById
-    Product getProductById(int id);
+    ProductResponseDTO getProductById(int id) throws ProductNotFound;
     //create/post new product
-    Product createProduct(ProductRequestDTO productRequestDTO);
+    ProductResponseDTO createProduct(ProductRequestDTO productRequestDTO) throws ProductNotFound;
     //Update
-    Product updateProduct(int id, ProductRequestDTO updatedProductRequestDTO);
+    ProductResponseDTO updateProduct(int id, ProductRequestDTO updatedProductRequestDTO);
 
     //Delete
-    Product deleteProduct(int id);
+    ProductResponseDTO deleteProduct(int id) throws ProductNotFound;
 }

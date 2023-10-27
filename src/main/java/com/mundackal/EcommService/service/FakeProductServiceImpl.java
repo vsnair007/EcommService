@@ -1,58 +1,64 @@
 package com.mundackal.EcommService.service;
 
+import com.mundackal.EcommService.client.FakeStoreClientAPI;
 import com.mundackal.EcommService.dto.FakeProductsResponseDTO;
+import com.mundackal.EcommService.dto.FakeStoreAPIResponseDTO;
 import com.mundackal.EcommService.dto.ProductRequestDTO;
+import com.mundackal.EcommService.dto.ProductResponseDTO;
+import com.mundackal.EcommService.exception.ProductNotFound;
 import com.mundackal.EcommService.model.Product;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+
+import static com.mundackal.EcommService.mapper.ProductMapper.FakeStoreAPIResponseDTOSToFakeProductsResponseDTO;
+import static com.mundackal.EcommService.mapper.ProductMapper.FakeStoreAPIResponseDTOToProductResponseMapper;
+import static com.mundackal.EcommService.utils.ProductUtils.isNull;
 
 @Service("fakeService")
 public class FakeProductServiceImpl implements ProductService{
 
-    private RestTemplateBuilder restTemplateBuilder;
+    private FakeStoreClientAPI fakeStoreClientAPI;
 
-    @Autowired
-    public FakeProductServiceImpl(RestTemplateBuilder restTemplateBuilder) {
-        this.restTemplateBuilder = restTemplateBuilder;
+    public FakeProductServiceImpl(FakeStoreClientAPI fakeStoreClientAPI) {
+        this.fakeStoreClientAPI = fakeStoreClientAPI;
     }
 
     @Override
-    public FakeProductsResponseDTO getAllProducts() {
-        RestTemplate rt = restTemplateBuilder.build();
-        Product[] recievedArray = rt.getForEntity("https://fakestoreapi.com/products", Product[].class).getBody();
-        FakeProductsResponseDTO resultingArray = new FakeProductsResponseDTO();
-        for(Product p : recievedArray ){
-            resultingArray.getProducts().add(p);
+    public FakeProductsResponseDTO getAllProducts() throws ProductNotFound {
+        FakeStoreAPIResponseDTO[] fakeStoreAPIResponseDTOS = fakeStoreClientAPI.getAllProducts();
+        if(isNull(fakeStoreAPIResponseDTOS)){
+            throw new ProductNotFound("No Products Available");
         }
-        return resultingArray;
+        return FakeStoreAPIResponseDTOSToFakeProductsResponseDTO(fakeStoreAPIResponseDTOS);
     }
 
     @Override
-    public Product getProductById(int id) {
-        RestTemplate rt = restTemplateBuilder.build();
-        return rt.getForEntity("https://fakestoreapi.com/products/"+id, Product.class).getBody();
+    public ProductResponseDTO getProductById(int id) throws ProductNotFound {
+        FakeStoreAPIResponseDTO fakeStoreAPIResponseDTO = fakeStoreClientAPI.getProductById(id);
+        if(isNull(fakeStoreAPIResponseDTO)){
+            throw new ProductNotFound("Product not found with id " + id);
+        }
+        return FakeStoreAPIResponseDTOToProductResponseMapper(fakeStoreAPIResponseDTO);
     }
 
     @Override
-    public Product createProduct(ProductRequestDTO product) {
-        String url = "https://fakestoreapi.com/products";
-        RestTemplate rt = restTemplateBuilder.build();
-        return rt.postForEntity(url,product,Product.class).getBody();
+    public ProductResponseDTO createProduct(ProductRequestDTO product) throws ProductNotFound {
+        FakeStoreAPIResponseDTO fakeStoreAPIResponseDTO = fakeStoreClientAPI.createProduct(product);
+        if(isNull(fakeStoreAPIResponseDTO)){
+            throw new ProductNotFound("Product not created");
+        }
+        return FakeStoreAPIResponseDTOToProductResponseMapper(fakeStoreAPIResponseDTO);
     }
 
     @Override
-    public Product updateProduct(int id, ProductRequestDTO updatedProductRequestDTO) {
+    public ProductResponseDTO updateProduct(int id, ProductRequestDTO updatedProductRequestDTO) {
         return null;
     }
 
     @Override
-    public Product deleteProduct(int id) {
-        String url = "https://fakestoreapi.com/products/"+id;
-        Product deletedProduct = getProductById(id);
-        RestTemplate rt = restTemplateBuilder.build();
-        rt.delete(url);
-        return deletedProduct;
+    public ProductResponseDTO deleteProduct(int id) throws ProductNotFound {
+        ProductResponseDTO productResponseDTO = getProductById(id);
+        fakeStoreClientAPI.deleteProduct(id);
+        return productResponseDTO;
     }
 }

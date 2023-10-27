@@ -10,8 +10,8 @@ import java.util.List;
 @Getter
 @Setter
 public class FakeProductsResponseDTO {
-    private List<Product> products;
+    private List<FakeStoreAPIResponseDTO> products;
     public FakeProductsResponseDTO(){
-        products = new ArrayList<Product>();
+        products = new ArrayList<FakeStoreAPIResponseDTO>();
     }
 }

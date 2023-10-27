@@ -2,6 +2,7 @@ package com.mundackal.EcommService.service;
 
 import com.mundackal.EcommService.dto.FakeProductsResponseDTO;
 import com.mundackal.EcommService.dto.ProductRequestDTO;
+import com.mundackal.EcommService.dto.ProductResponseDTO;
 import com.mundackal.EcommService.model.Product;
 import org.springframework.stereotype.Service;
 
@@ -14,22 +15,22 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public Product getProductById(int id) {
+    public ProductResponseDTO getProductById(int id) {
         return null;
     }
 
     @Override
-    public Product createProduct(ProductRequestDTO product) {
+    public ProductResponseDTO createProduct(ProductRequestDTO productRequestDTO) {
         return null;
     }
 
     @Override
-    public Product updateProduct(int id, ProductRequestDTO updatedProductRequestDTO) {
+    public ProductResponseDTO updateProduct(int id, ProductRequestDTO updatedProductRequestDTO) {
         return null;
     }
 
     @Override
-    public Product deleteProduct(int id) {
+    public ProductResponseDTO deleteProduct(int id) {
         return null;
     }
 }
