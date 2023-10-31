@@ -1,17 +1,21 @@
 package com.mundackal.EcommService.model;
 
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
+@Entity
+public class Product extends BaseModel{
 
-public class Product {
-    private int id;
     private String title;
     private double price;
-    private String category;
+    @ManyToOne
+    private Category category;
     private String description;
     private String image;
 }
