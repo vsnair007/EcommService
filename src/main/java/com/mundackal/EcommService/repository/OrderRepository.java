@@ -1,12 +1,11 @@
 package com.mundackal.EcommService.repository;
 
-import com.mundackal.EcommService.model.Category;
-import com.mundackal.EcommService.model.Product;
+import com.mundackal.EcommService.model.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.UUID;
 
 @Repository
-public interface CategoryRepository extends JpaRepository<Category, UUID> {
+public interface OrderRepository extends JpaRepository<Order, UUID> {
 }

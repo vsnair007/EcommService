@@ -2,6 +2,9 @@ package com.mundackal.EcommService.mapper;
 
 
 import com.mundackal.EcommService.dto.*;
+import com.mundackal.EcommService.model.Product;
+
+import java.util.List;
 
 public class ProductMapper {
     public static ProductResponseDTO FakeStoreAPIResponseDTOToProductResponseMapper(FakeStoreAPIResponseDTO fakeStoreAPIResponseDTO){

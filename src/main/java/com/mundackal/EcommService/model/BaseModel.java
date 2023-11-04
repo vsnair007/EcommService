@@ -1,18 +1,16 @@
 package com.mundackal.EcommService.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
-import org.springframework.data.jpa.repository.JpaRepository;
+
 
 import java.util.UUID;
 
 @Getter
 @Setter
+//@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @MappedSuperclass
 public abstract class BaseModel {
     @Id
